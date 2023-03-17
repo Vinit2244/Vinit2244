@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @Vinit
-- 👀 I’m interested in Programming
-- 🌱 I’m currently learning Python and SQL
+- 👀 Btech. CSE Student at IIIT Hyderabad
+- 🌱 Always eager to learn and develop
 - 📫 How to reach me email: vinit2004mehtaa@gmail.com
 
 <!---
