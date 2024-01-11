@@ -15,7 +15,7 @@ Passionate about coding and creating innovative solutions. I enjoy diving into t
 ### Talking about Personal Stuffs:
 
 - 👨‍🎓 I'm a **Senior Software Engineering Student**
-- 👨‍🏫 I'm a **Member** of [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members)[ArtSoc Club](https://clubs.iiit.ac.in/clubs/artsociety/members)[Sports Council](https://clubs.iiit.ac.in/clubs/sports_secretary/members)
+- 👨‍🏫 I'm a **Member** of [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members) | [ArtSoc Club](https://clubs.iiit.ac.in/clubs/artsociety/members) | [Sports Council](https://clubs.iiit.ac.in/clubs/sports_secretary/members)
 - 💬 Ask me about anything, I am happy to help
 - 📬 How to reach me: [vinit2004mehtaa@gmail.com](mailto:vinit2004mehtaa@gmail.com)
 - 📝 [Resume](https://drive.google.com/file/d/1mncXqouOeb74A7cT3B12VU3yR_XU1Ce5/view?usp=sharing).
