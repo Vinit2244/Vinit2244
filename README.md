@@ -15,8 +15,8 @@ Passionate about coding and creating innovative solutions. I enjoy diving into t
 ### Talking about Personal Stuffs:
 
 - 👨‍🎓 I'm a **Senior Software Engineering Student**
-- 👨‍🏫 I'm a **Member** of [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members) | [ArtSoc Club](https://clubs.iiit.ac.in/clubs/artsociety/members) | [Sports Council](https://clubs.iiit.ac.in/clubs/sports_secretary/members)
-- 💬 Ask me about anything, I am happy to help
+- 👨‍🏫 I'm a **Member** of [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members) | [ArtSoc Club](https://clubs.iiit.ac.in/clubs/artsociety/members) | [Sports Council](https://clubs.iiit.ac.in/clubs/sports_secretary/members) | [Student Parliament IIITH]()
+- 💬 Ask me about anything, I am happy to help!
 - 📬 How to reach me: [vinit2004mehtaa@gmail.com](mailto:vinit2004mehtaa@gmail.com)
 - 📝 [Resume](https://drive.google.com/file/d/1mncXqouOeb74A7cT3B12VU3yR_XU1Ce5/view?usp=sharing).
 - 💪 This is where I write, code and solve problems:
@@ -43,6 +43,8 @@ Passionate about coding and creating innovative solutions. I enjoy diving into t
     <a href="#"><img alt="Markdown" src="https://img.shields.io/badge/Markdown-000000.svg?logo=markdown&logoColor=white"></a>
     <a href="#"><img alt="Python" src="https://img.shields.io/badge/Python-14354C.svg?logo=python&logoColor=white"></a>
     <a href="#"><img alt="SQL" src="https://custom-icon-badges.herokuapp.com/badge/SQL-025E8C.svg?logo=database&logoColor=white"></a>
+    <a href="#"><img alt="Rust" src="https://img.shields.io/badge/Rust-000000.svg?logo=rust&logoColor=white"></a>
+    <a href="#"><img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6.svg?logo=typescript&logoColor=white"></a>
 </p>
 
 ### 🧰 Frameworks and libraries
@@ -52,6 +54,9 @@ Passionate about coding and creating innovative solutions. I enjoy diving into t
     <a href="#"><img alt="Bootstrap" src="https://img.shields.io/badge/Bootstrap-7952B3.svg?logo=bootstrap&logoColor=white"></a>
     <a href="#"><img alt="NumPy" src="https://img.shields.io/badge/Numpy-013243.svg?logo=numpy&logoColor=white"></a>
     <a href="#"><img alt="Pandas" src="https://img.shields.io/badge/Pandas-150458.svg?logo=pandas&logoColor=white"></a>
+    <a href="#"><img alt="Yarn" src="https://img.shields.io/badge/Yarn-2C8EBB.svg?logo=yarn&logoColor=white"></a>
+    <a href="#"><img alt="Tauri" src="https://img.shields.io/badge/Tauri-EE4C2C.svg?logo=tauri&logoColor=white"></a>
+    <a href="#"><img alt="Tkinter" src="https://img.shields.io/badge/Tkinter-FFD63B.svg?logo=python&logoColor=white"></a>
 </p>
 
 ### 🗄️ Databases and cloud hosting
@@ -64,10 +69,17 @@ Passionate about coding and creating innovative solutions. I enjoy diving into t
 ### 💻 Software and tools
 
 <p>
-    <a href="#"><img alt="Brave" src="https://img.shields.io/badge/-Brave-FB542B?logo=brave&logoColor=white"></a>
     <a href="#"><img alt="Git" src="https://img.shields.io/badge/Git-F05033.svg?logo=git&logoColor=white"></a>
     <a href="#"><img alt="Jupyter" src="https://img.shields.io/badge/Jupyter-F37626.svg?logo=Jupyter&logoColor=white"></a>
     <a href="#"><img alt="Postman" src="https://img.shields.io/badge/Postman-FF6C37?logo=postman&logoColor=white"></a>
-    <a href="#"><img alt="Stack Overflow" src="https://img.shields.io/badge/-Stack%20Overflow-FE7A16?logo=stack-overflow&logoColor=white"></a>
+    <a href="#"><img alt="Visual Paradigm" src="https://forums.visual-paradigm.com/uploads/default/original/1X/611984aefcf5ca1851796787682a14acf6b347dc.png" height="20"></a>
     <a href="#"><img alt="Visual Studio Code" src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?logo=visual-studio-code&logoColor=white"></a>
+    <a href="#"><img alt="QGIS" src="https://img.shields.io/badge/QGIS-589632.svg?logo=qgis&logoColor=white"></a>
+    <a href="#"><img alt="Google Earth Engine" src="https://img.shields.io/badge/Google%20Earth%20Engine-3D5A97.svg?logo=google-earth&logoColor=white"></a>
+    <a href="#"><img alt="Canva" src="https://img.shields.io/badge/Canva-00C4CC.svg?logo=canva&logoColor=white"></a>
+    <a href="#"><img alt="Blender" src="https://img.shields.io/badge/Blender-F5792A.svg?logo=blender&logoColor=white"></a>
+    <a href="#"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-181717.svg?logo=github&logoColor=white"></a>
+    <a href="#"><img alt="oneM2M" src="https://img.shields.io/badge/oneM2M-003366.svg?logo=onem2m&logoColor=white"></a>
+    <a href="#"><img alt="ngrok" src="https://img.shields.io/badge/ngrok-1A1A1A.svg?logo=ngrok&logoColor=white"></a>
+    <a href="#"><img alt="PHYLIP" src="https://img.shields.io/badge/PHYLIP-9ACD32.svg?logo=phylip&logoColor=white"></a>
 </p>
