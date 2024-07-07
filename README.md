@@ -15,7 +15,7 @@ Passionate about coding and creating innovative solutions. I enjoy diving into t
 ### Talking about Personal Stuffs:
 
 - 👨‍🎓 I'm a **Junior Software Engineering Student**
-- 🔬 I'm an Undergraduate Researcher at Machine Learning Lab (MLL) at IIIT-H under Prof. Charu Sharma. Currently working on 3D Perception.
+- 🔬 I'm an **Undergraduate Researcher** at [Machine Learning Lab (MLL)](https://www.linkedin.com/company/mll-iiith/) at [IIIT Hyderabad](https://www.iiit.ac.in) under [Prof. Charu Sharma](https://charusharma.org) on the topic of 3D Perception.
 - 👨‍🏫 I'm a **Member** of [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members) | [ArtSoc Club](https://clubs.iiit.ac.in/clubs/artsociety/members) | [Sports Council](https://clubs.iiit.ac.in/clubs/sports_secretary/members) | [Student Parliament IIITH]()
 - 💬 Ask me about anything, I am happy to help!
 - 📬 How to reach me: [vinit2004mehtaa@gmail.com](mailto:vinit2004mehtaa@gmail.com)
