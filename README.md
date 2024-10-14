@@ -9,17 +9,18 @@
 
 ## Glad to see you here! &nbsp;
 
-I am currently studying CSE in 3rd year at International Institute of Information Technology, Hyderabad.
+CSE Junior at International Institute of Information Technology, Hyderabad.
 Passionate about coding and creating innovative solutions. I enjoy diving into the world of technology to build meaningful projects. When not in front of the screen, you'll find me immersed in a good book, expressing myself on canvas, spiking a volleyball, or simply enjoying the rhythm of my favorite tunes. Let's connect and explore the endless possibilities of tech and creativity! 🚀
 
 ### Talking about Personal Stuffs:
 
 - 👨‍🎓 I'm a **Junior Software Engineering Student**
 - 🔬 I'm an **Undergraduate Researcher** at [Machine Learning Lab (MLL)](https://www.linkedin.com/company/mll-iiith/) at [IIIT Hyderabad](https://www.iiit.ac.in) under [Prof. Charu Sharma](https://charusharma.org) on the topic of 3D Perception.
-- 👨‍🏫 I'm a **Member** of [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members) | [ArtSoc Club](https://clubs.iiit.ac.in/clubs/artsociety/members) | [Sports Council](https://clubs.iiit.ac.in/clubs/sports_secretary/members) | [Student Parliament IIITH]()
+- 🏃🏻‍➡️ I'm [Sports Secretary](https://clubs.iiit.ac.in/clubs/sports_secretary/members) at IIITH for session 2024-25
+- 👨‍🏫 I'm a **Member** of [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members) | [ArtSoc Club](https://clubs.iiit.ac.in/clubs/artsociety/members) | [Student Parliament IIITH]()
 - 💬 Ask me about anything, I am happy to help!
 - 📬 How to reach me: [vinit2004mehtaa@gmail.com](mailto:vinit2004mehtaa@gmail.com)
-- 📝 [Resume](https://drive.google.com/file/d/1mncXqouOeb74A7cT3B12VU3yR_XU1Ce5/view?usp=sharing)
+- 📝 [Resume](https://drive.google.com/file/d/1vmECSWw02CfEU-NTu9M_CsK4SIFBri2j/view?usp=share_link)
 - 💪 This is where I write, code and solve problems:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -46,6 +47,7 @@ Passionate about coding and creating innovative solutions. I enjoy diving into t
     <a href="#"><img alt="Markdown" src="https://img.shields.io/badge/Markdown-000000.svg?logo=markdown&logoColor=white"></a>
     <a href="#"><img alt="Rust" src="https://img.shields.io/badge/Rust-FFA500.svg?logo=rust&logoColor=white"></a>
     <a href="#"><img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6.svg?logo=typescript&logoColor=white"></a>
+    <a href="#"><img alt="Solidity" src="https://img.shields.io/badge/Solidity-363636.svg?logo=solidity&logoColor=white"></a>
 </p>
 
 ### 🧰 Frameworks and libraries
@@ -61,7 +63,9 @@ Passionate about coding and creating innovative solutions. I enjoy diving into t
     <a href="#"><img alt="Tkinter" src="https://img.shields.io/badge/Tkinter-FFD63B.svg?logo=python&logoColor=white"></a>
     <a href="#"><img alt="Matplotlib" src="https://img.shields.io/badge/Matplotlib-3776AB.svg?logo=matplotlib&logoColor=white"></a>
     <a href="#"><img alt="PyGame" src="https://img.shields.io/badge/PyGame-ABABAB?logo=pygame&logoColor=white"></a>
-    <a href="#"><img alt="Scikit-learn" src="https://img.shields.io/badge/Scikit--learn-%2399FF00.svg?logo=scikit-learn&logoColor=white"></a>
+    <a href="#"><img alt="Scikit-learn" src="https://img.shields.io/badge/Scikit--learn-%2399FF00.svg?logo=scikit-learn&logoColor=white"></a
+    <a href="#"><img alt="Weights and Biases" src="https://img.shields.io/badge/Weights%20&%20Biases-FFBE00.svg?logo=weightsandbiases&logoColor=white"></a>
+    <a href="#"><img alt="Web3" src="https://img.shields.io/badge/Web3-F16822.svg?logo=web3dotjs&logoColor=white"></a>
 </p>
 
 ### 🗄️ Databases and cloud hosting
@@ -86,4 +90,5 @@ Passionate about coding and creating innovative solutions. I enjoy diving into t
     <a href="#"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-181717.svg?logo=github&logoColor=white"></a>
     <a href="#"><img alt="oneM2M" src="https://img.shields.io/badge/oneM2M-003366.svg?logo=onem2m&logoColor=white"></a>
     <a href="#"><img alt="ngrok" src="https://img.shields.io/badge/ngrok-1A1A1A.svg?logo=ngrok&logoColor=white"></a>
+    <a href="#"><img alt="Ethereum" src="https://img.shields.io/badge/Ethereum-3C3C3D.svg?logo=ethereum&logoColor=white"></a>
 </p>
