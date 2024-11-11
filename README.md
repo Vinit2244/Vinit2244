@@ -20,7 +20,7 @@ Passionate about coding and creating innovative solutions. I enjoy diving into t
 - 👨‍🏫 I'm a **Member** of [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members) | [ArtSoc Club](https://clubs.iiit.ac.in/clubs/artsociety/members) | [Student Parliament IIITH]()
 - 💬 Ask me about anything, I am happy to help!
 - 📬 How to reach me: [vinit2004mehtaa@gmail.com](mailto:vinit2004mehtaa@gmail.com)
-- 📝 [Resume](https://drive.google.com/file/d/1vmECSWw02CfEU-NTu9M_CsK4SIFBri2j/view?usp=share_link)
+- 📝 [Resume](https://drive.google.com/file/d/14-FUibbvFFT6jn8oZpsvfN2Bfx_JIinG/view?usp=share_link)
 - 💪 This is where I write, code and solve problems:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
