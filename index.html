@@ -1,0 +1,1149 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.9.1/dist/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #38bdf8;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hero-title {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card {
+            perspective: 1000px;
+            transition: transform 0.6s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        
+        .card:hover .card-inner {
+            transform: rotateY(10deg);
+        }
+        
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .skill-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: #1e293b;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s ease;
+        }
+        
+        .contact-input {
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+        
+        /* Custom cursor */
+        .cursor {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba(56, 189, 248, 0.3);
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0) translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+            mix-blend-mode: screen;
+        }
+
+        .cursor-highlight {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, rgba(56, 189, 248, 0) 70%);
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0) translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .skill-percentage {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.8s ease-out;
+        }
+
+        .skill-percentage.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-progress {
+            width: 0 !important; /* Override any inline styles */
+            transition: width 1.5s ease-out;
+        }
+
+        .skill-progress.visible {
+            width: var(--progress-width) !important;
+        }
+        
+        /* Timeline styles */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, #38bdf8, #818cf8);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 10px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -12px;
+        }
+        
+        .timeline-content {
+            padding: 20px 30px;
+            background: rgba(30, 41, 59, 0.8);
+            position: relative;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+                right: auto;
+            }
+            
+            .timeline-item:nth-child(even)::after {
+                left: 18px;
+            }
+        }
+        
+        /* 3D Earth Animation */
+        #earth-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: -2;
+            opacity: 0.3;
+            perspective: 1000px;
+        }
+        
+        .earth {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 40s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotateY(0) rotateX(15deg);
+            }
+            100% {
+                transform: rotateY(360deg) rotateX(15deg);
+            }
+        }
+        
+        .symbol {
+            position: absolute;
+            color: #38bdf8;
+            font-size: 12px;
+            font-family: monospace;
+            text-shadow: 0 0 5px rgba(56, 189, 248, 0.8);
+            transform-style: preserve-3d;
+            animation: pulse 3s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.inset-1{inset:0.25rem}.bottom-10{bottom:2.5rem}.left-1\/2{left:50%}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-10{margin-bottom:2.5rem}.mb-16{margin-bottom:4rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-1{margin-left:0.25rem}.mr-4{margin-right:1rem}.mt-10{margin-top:2.5rem}.mt-2{margin-top:0.5rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-16{height:4rem}.h-32{height:8rem}.h-4{height:1rem}.h-48{height:12rem}.h-6{height:1.5rem}.h-64{height:16rem}.h-8{height:2rem}.h-full{height:100%}.min-h-screen{min-height:100vh}.w-16{width:4rem}.w-32{width:8rem}.w-4{width:1rem}.w-6{width:1.5rem}.w-64{width:16rem}.w-8{width:2rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.resize-none{resize:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-12{gap:3rem}.gap-16{gap:4rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-8{gap:2rem}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1.5rem * var(--tw-space-x-reverse));margin-left:calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-8 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2rem * var(--tw-space-x-reverse));margin-left:calc(2rem * calc(1 - var(--tw-space-x-reverse)))}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-sky-400{--tw-border-opacity:1;border-color:rgb(56 189 248 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-800\/50{background-color:rgb(30 41 59 / 0.5)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/80{background-color:rgb(15 23 42 / 0.8)}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-emerald-400{--tw-gradient-from:#34d399 var(--tw-gradient-from-position);--tw-gradient-to:rgb(52 211 153 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-purple-400{--tw-gradient-from:#c084fc var(--tw-gradient-from-position);--tw-gradient-to:rgb(192 132 252 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-sky-400{--tw-gradient-from:#38bdf8 var(--tw-gradient-from-position);--tw-gradient-to:rgb(56 189 248 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-indigo-400{--tw-gradient-to:#818cf8 var(--tw-gradient-to-position)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.to-pink-600{--tw-gradient-to:#db2777 var(--tw-gradient-to-position)}.to-sky-600{--tw-gradient-to:#0284c7 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-4{padding-left:1rem;padding-right:1rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-5xl{font-size:3rem;line-height:1}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.text-sky-400{--tw-text-opacity:1;color:rgb(56 189 248 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-sky-400\/10:hover{background-color:rgb(56 189 248 / 0.1)}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:text-sky-400:hover{--tw-text-opacity:1;color:rgb(56 189 248 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}@media (min-width: 768px){.md\:mt-0{margin-top:0px}.md\:flex{display:flex}.md\:hidden{display:none}.md\:w-1\/2{width:50%}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:text-2xl{font-size:1.5rem;line-height:2rem}.md\:text-7xl{font-size:4.5rem;line-height:1}}@media (min-width: 1024px){.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}</style></head>
+<body>
+    <div class="cursor" style="opacity: 1; transform: translate(-50%, -50%) translate(679px, 70px); width: 30px; height: 30px; background-color: rgba(56, 189, 248, 0.3);"></div>
+    <div class="cursor-highlight" style="opacity: 1; transform: translate(-50%, -50%) translate(679px, 70px); width: 100px; height: 100px;"></div>
+    
+    <div id="canvas-container"><canvas width="686" height="985" style="display: block; width: 686px; height: 985px;"></canvas></div>
+    <div id="earth-container">
+        <div class="earth" id="earth"><div class="symbol" style="transform: translate3d(-1.07882e-14px, 1.48681e-14px, -150px);">&gt;</div><div class="symbol" style="transform: translate3d(3.81414px, -16.8657px, -149px);">-</div><div class="symbol" style="transform: translate3d(-23.1643px, -7.70827px, -148px);">^</div><div class="symbol" style="transform: translate3d(-20.5779px, 21.6229px, -147px);">@</div><div class="symbol" style="transform: translate3d(6.66016px, 33.7586px, -146px);">$</div><div class="symbol" style="transform: translate3d(33.0815px, 19.5093px, -145px);">&amp;</div><div class="symbol" style="transform: translate3d(40.8868px, -9.6056px, -144px);">|</div><div class="symbol" style="transform: translate3d(26.9245px, -36.4153px, -143px);">)</div><div class="symbol" style="transform: translate3d(-0.925346px, -48.3233px, -142px);">~</div><div class="symbol" style="transform: translate3d(-30.4041px, -41.1654px, -141px);">_</div><div class="symbol" style="transform: translate3d(-50.5858px, -18.4684px, -140px);">+</div><div class="symbol" style="transform: translate3d(-55.1799px, 11.5837px, -139px);">$</div><div class="symbol" style="transform: translate3d(-43.4118px, 39.6411px, -138px);">[</div><div class="symbol" style="transform: translate3d(-19.1309px, 58.0087px, -137px);">^</div><div class="symbol" style="transform: translate3d(11.0269px, 62.309px, -136px);">*</div><div class="symbol" style="transform: translate3d(39.6924px, 51.9569px, -135px);">[</div><div class="symbol" style="transform: translate3d(60.5195px, 29.6882px, -134px);">\</div><div class="symbol" style="transform: translate3d(69.3596px, 0.495815px, -133px);">*</div><div class="symbol" style="transform: translate3d(64.7745px, -29.6692px, -132px);">}</div><div class="symbol" style="transform: translate3d(47.9506px, -55.1338px, -131px);">~</div><div class="symbol" style="transform: translate3d(22.1645px, -71.4754px, -130px);">)</div><div class="symbol" style="transform: translate3d(-8.0151px, -76.1233px, -129px);">&lt;</div><div class="symbol" style="transform: translate3d(-37.6078px, -68.5686px, -128px);">_</div><div class="symbol" style="transform: translate3d(-62.0353px, -50.2257px, -127px);">&amp;</div><div class="symbol" style="transform: translate3d(-77.7597px, -24.0297px, -126px);">/</div><div class="symbol" style="transform: translate3d(-82.6888px, 6.12818px, -125px);">)</div><div class="symbol" style="transform: translate3d(-76.3309px, 36.0221px, -124px);">-</div><div class="symbol" style="transform: translate3d(-59.7196px, 61.6812px, -123px);">$</div><div class="symbol" style="transform: translate3d(-35.1535px, 79.8764px, -122px);">&amp;</div><div class="symbol" style="transform: translate3d(-5.80912px, 88.4605px, -121px);">)</div><div class="symbol" style="transform: translate3d(24.7082px, 86.5419px, -120px);">*</div><div class="symbol" style="transform: translate3d(52.8159px, 74.4949px, -119px);">&gt;</div><div class="symbol" style="transform: translate3d(75.3578px, 53.8257px, -118px);">^</div><div class="symbol" style="transform: translate3d(89.9212px, 26.9291px, -117px);">~</div><div class="symbol" style="transform: translate3d(95.0452px, -3.22759px, -116px);">#</div><div class="symbol" style="transform: translate3d(90.311px, -33.4503px, -115px);">@</div><div class="symbol" style="transform: translate3d(76.3198px, -60.6572px, -114px);">&gt;</div><div class="symbol" style="transform: translate3d(54.571px, -82.1767px, -113px);">_</div><div class="symbol" style="transform: translate3d(27.2649px, -95.9824px, -112px);">#</div><div class="symbol" style="transform: translate3d(-2.94539px, -100.848px, -111px);">+</div><div class="symbol" style="transform: translate3d(-33.2243px, -96.4165px, -110px);">|</div><div class="symbol" style="transform: translate3d(-60.8199px, -83.1862px, -109px);">|</div><div class="symbol" style="transform: translate3d(-83.3035px, -62.4222px, -108px);">{</div><div class="symbol" style="transform: translate3d(-98.7645px, -36.008px, -107px);">_</div><div class="symbol" style="transform: translate3d(-105.948px, -6.25491px, -106px);">{</div><div class="symbol" style="transform: translate3d(-104.326px, 24.3114px, -105px);">|</div><div class="symbol" style="transform: translate3d(-94.1126px, 53.1679px, -104px);">+</div><div class="symbol" style="transform: translate3d(-76.2069px, 77.9969px, -103px);">}</div><div class="symbol" style="transform: translate3d(-52.0962px, 96.8607px, -102px);">~</div><div class="symbol" style="transform: translate3d(-23.7138px, 108.336px, -101px);">\</div><div class="symbol" style="transform: translate3d(6.72713px, 111.601px, -100px);">=</div><div class="symbol" style="transform: translate3d(36.9113px, 106.473px, -99px);">=</div><div class="symbol" style="transform: translate3d(64.5968px, 93.3984px, -98px);">@</div><div class="symbol" style="transform: translate3d(87.7757px, 73.3923px, -97px);">=</div><div class="symbol" style="transform: translate3d(104.809px, 47.948px, -96px);">+</div><div class="symbol" style="transform: translate3d(114.531px, 18.9117px, -95px);">}</div><div class="symbol" style="transform: translate3d(116.31px, -11.658px, -94px);">-</div><div class="symbol" style="transform: translate3d(110.078px, -41.6393px, -93px);">&amp;</div><div class="symbol" style="transform: translate3d(96.3114px, -68.9936px, -92px);">+</div><div class="symbol" style="transform: translate3d(75.9846px, -91.8986px, -91px);">@</div><div class="symbol" style="transform: translate3d(50.4875px, -108.862px, -90px);">~</div><div class="symbol" style="transform: translate3d(21.5227px, -118.81px, -89px);">$</div><div class="symbol" style="transform: translate3d(-9.01466px, -121.139px, -88px);">%</div><div class="symbol" style="transform: translate3d(-39.1629px, -115.747px, -87px);">[</div><div class="symbol" style="transform: translate3d(-67.0194px, -103.016px, -86px);">@</div><div class="symbol" style="transform: translate3d(-90.8572px, -83.7853px, -85px);">&gt;</div><div class="symbol" style="transform: translate3d(-109.226px, -59.2761px, -84px);">)</div><div class="symbol" style="transform: translate3d(-121.034px, -31.0142px, -83px);">+</div><div class="symbol" style="transform: translate3d(-125.6px, -0.726732px, -82px);">]</div><div class="symbol" style="transform: translate3d(-122.691px, 29.7652px, -81px);">*</div><div class="symbol" style="transform: translate3d(-112.514px, 58.6562px, -80px);">[</div><div class="symbol" style="transform: translate3d(-95.7024px, 84.2618px, -79px);">{</div><div class="symbol" style="transform: translate3d(-73.2621px, 105.113px, -78px);">#</div><div class="symbol" style="transform: translate3d(-46.509px, 120.033px, -77px);">&amp;</div><div class="symbol" style="transform: translate3d(-16.9851px, 128.201px, -76px);">_</div><div class="symbol" style="transform: translate3d(13.6324px, 129.187px, -75px);">}</div><div class="symbol" style="transform: translate3d(43.628px, 122.966px, -74px);">}</div><div class="symbol" style="transform: translate3d(71.343px, 109.914px, -73px);">=</div><div class="symbol" style="transform: translate3d(95.2651px, 90.7776px, -72px);">]</div><div class="symbol" style="transform: translate3d(114.107px, 66.6223px, -71px);">+</div><div class="symbol" style="transform: translate3d(126.873px, 38.773px, -70px);">%</div><div class="symbol" style="transform: translate3d(132.901px, 8.73611px, -69px);">}</div><div class="symbol" style="transform: translate3d(131.898px, -21.8837px, -68px);">~</div><div class="symbol" style="transform: translate3d(123.943px, -51.4695px, -67px);">|</div><div class="symbol" style="transform: translate3d(109.478px, -78.4766px, -66px);">+</div><div class="symbol" style="transform: translate3d(89.2776px, -101.511px, -65px);">*</div><div class="symbol" style="transform: translate3d(64.4041px, -119.399px, -64px);">^</div><div class="symbol" style="transform: translate3d(36.1475px, -131.242px, -63px);">]</div><div class="symbol" style="transform: translate3d(5.95643px, -136.457px, -62px);">)</div><div class="symbol" style="transform: translate3d(-24.6375px, -134.804px, -61px);">_</div><div class="symbol" style="transform: translate3d(-54.0974px, -126.386px, -60px);">)</div><div class="symbol" style="transform: translate3d(-80.9578px, -111.646px, -59px);">|</div><div class="symbol" style="transform: translate3d(-103.896px, -91.3328px, -58px);">~</div><div class="symbol" style="transform: translate3d(-121.793px, -66.4637px, -57px);">|</div><div class="symbol" style="transform: translate3d(-133.789px, -38.2696px, -56px);">&gt;</div><div class="symbol" style="transform: translate3d(-139.316px, -8.13198px, -55px);">_</div><div class="symbol" style="transform: translate3d(-138.125px, 22.4853px, -54px);">]</div><div class="symbol" style="transform: translate3d(-130.291px, 52.1077px, -53px);">~</div><div class="symbol" style="transform: translate3d(-116.208px, 79.3203px, -52px);">/</div><div class="symbol" style="transform: translate3d(-96.5616px, 102.834px, -51px);">(</div><div class="symbol" style="transform: translate3d(-72.2966px, 121.545px, -50px);">~</div><div class="symbol" style="transform: translate3d(-44.5675px, 134.584px, -49px);">|</div><div class="symbol" style="transform: translate3d(-14.6826px, 141.352px, -48px);">#</div><div class="symbol" style="transform: translate3d(15.9587px, 141.55px, -47px);">(</div><div class="symbol" style="transform: translate3d(45.932px, 135.182px, -46px);">@</div><div class="symbol" style="transform: translate3d(73.8533px, 122.559px, -45px);">@</div><div class="symbol" style="transform: translate3d(98.4425px, 104.274px, -44px);">^</div><div class="symbol" style="transform: translate3d(118.58px, 81.1774px, -43px);">[</div><div class="symbol" style="transform: translate3d(133.357px, 54.3327px, -42px);">_</div><div class="symbol" style="transform: translate3d(142.111px, 24.9669px, -41px);">$</div><div class="symbol" style="transform: translate3d(144.46px, -5.58611px, -40px);">}</div><div class="symbol" style="transform: translate3d(140.31px, -35.947px, -39px);">}</div><div class="symbol" style="transform: translate3d(129.858px, -64.753px, -38px);">%</div><div class="symbol" style="transform: translate3d(113.584px, -90.718px, -37px);">|</div><div class="symbol" style="transform: translate3d(92.2228px, -112.69px, -36px);">~</div><div class="symbol" style="transform: translate3d(66.7327px, -129.699px, -35px);">_</div><div class="symbol" style="transform: translate3d(38.2488px, -141px, -34px);">$</div><div class="symbol" style="transform: translate3d(8.03267px, -146.104px, -33px);">%</div><div class="symbol" style="transform: translate3d(-22.5837px, -144.796px, -32px);">(</div><div class="symbol" style="transform: translate3d(-52.257px, -137.143px, -31px);">_</div><div class="symbol" style="transform: translate3d(-79.6911px, -123.488px, -30px);">\</div><div class="symbol" style="transform: translate3d(-103.693px, -104.435px, -29px);">-</div><div class="symbol" style="transform: translate3d(-123.223px, -80.8207px, -28px);">#</div><div class="symbol" style="transform: translate3d(-137.441px, -53.6737px, -27px);">|</div><div class="symbol" style="transform: translate3d(-145.738px, -24.1733px, -26px);">=</div><div class="symbol" style="transform: translate3d(-147.763px, 6.40472px, -25px);">$</div><div class="symbol" style="transform: translate3d(-143.436px, 36.7428px, -24px);">-</div><div class="symbol" style="transform: translate3d(-132.95px, 65.5381px, -23px);">%</div><div class="symbol" style="transform: translate3d(-116.761px, 91.5581px, -22px);">)</div><div class="symbol" style="transform: translate3d(-95.5666px, 113.693px, -21px);">=</div><div class="symbol" style="transform: translate3d(-70.2768px, 131.001px, -20px);">&gt;</div><div class="symbol" style="transform: translate3d(-41.9727px, 142.749px, -19px);">_</div><div class="symbol" style="transform: translate3d(-11.8608px, 148.443px, -18px);">-</div><div class="symbol" style="transform: translate3d(18.779px, 147.846px, -17px);">*</div><div class="symbol" style="transform: translate3d(48.6474px, 140.987px, -16px);">}</div><div class="symbol" style="transform: translate3d(76.4807px, 128.163px, -15px);">}</div><div class="symbol" style="transform: translate3d(101.104px, 109.918px, -14px);">_</div><div class="symbol" style="transform: translate3d(121.48px, 87.0272px, -13px);">|</div><div class="symbol" style="transform: translate3d(136.751px, 60.4575px, -12px);">+</div><div class="symbol" style="transform: translate3d(146.279px, 31.3302px, -11px);">/</div><div class="symbol" style="transform: translate3d(149.664px, 0.87181px, -10px);">)</div><div class="symbol" style="transform: translate3d(146.767px, -29.637px, -9px);">-</div><div class="symbol" style="transform: translate3d(137.714px, -58.9151px, -8px);">~</div><div class="symbol" style="transform: translate3d(122.884px, -85.7345px, -7px);">#</div><div class="symbol" style="transform: translate3d(102.904px, -108.971px, -6px);">[</div><div class="symbol" style="transform: translate3d(78.6105px, -127.653px, -5px);">\</div><div class="symbol" style="transform: translate3d(51.0228px, -140.999px, -4px);">_</div><div class="symbol" style="transform: translate3d(21.2964px, -148.45px, -3px);">$</div><div class="symbol" style="transform: translate3d(-9.3244px, -149.697px, -2px);">\</div><div class="symbol" style="transform: translate3d(-39.5582px, -144.686px, -1px);">)</div><div class="symbol" style="transform: translate3d(-68.1403px, -133.63px, 9.18485e-15px);">(</div><div class="symbol" style="transform: translate3d(-93.8751px, -116.989px, 1px);">&gt;</div><div class="symbol" style="transform: translate3d(-115.686px, -95.4608px, 2px);">&gt;</div><div class="symbol" style="transform: translate3d(-132.66px, -69.9449px, 3px);">*</div><div class="symbol" style="transform: translate3d(-144.087px, -41.5088px, 4px);">{</div><div class="symbol" style="transform: translate3d(-149.487px, -11.3422px, 5px);">{</div><div class="symbol" style="transform: translate3d(-148.633px, 19.292px, 6px);">+</div><div class="symbol" style="transform: translate3d(-141.56px, 49.1106px, 7px);">}</div><div class="symbol" style="transform: translate3d(-128.561px, 76.8635px, 8px);">@</div><div class="symbol" style="transform: translate3d(-110.181px, 101.386px, 9px);">/</div><div class="symbol" style="transform: translate3d(-87.1889px, 121.647px, 10px);">%</div><div class="symbol" style="transform: translate3d(-60.5483px, 136.795px, 11px);">*</div><div class="symbol" style="transform: translate3d(-31.3779px, 146.19px, 12px);">\</div><div class="symbol" style="transform: translate3d(-0.904088px, 149.433px, 13px);">_</div><div class="symbol" style="transform: translate3d(29.5898px, 146.385px, 14px);">#</div><div class="symbol" style="transform: translate3d(58.8173px, 137.17px, 15px);">$</div><div class="symbol" style="transform: translate3d(85.5432px, 122.173px, 16px);">^</div><div class="symbol" style="transform: translate3d(108.635px, 102.026px, 17px);">\</div><div class="symbol" style="transform: translate3d(127.113px, 77.5777px, 18px);">^</div><div class="symbol" style="transform: translate3d(140.189px, 49.8616px, 19px);">-</div><div class="symbol" style="transform: translate3d(147.302px, 20.0532px, 20px);">{</div><div class="symbol" style="transform: translate3d(148.145px, -10.5806px, 21px);">+</div><div class="symbol" style="transform: translate3d(142.677px, -40.7342px, 22px);">{</div><div class="symbol" style="transform: translate3d(131.124px, -69.1185px, 23px);">]</div><div class="symbol" style="transform: translate3d(113.976px, -94.5167px, 24px);">-</div><div class="symbol" style="transform: translate3d(91.9623px, -115.836px, 25px);">-</div><div class="symbol" style="transform: translate3d(66.0237px, -132.155px, 26px);">{</div><div class="symbol" style="transform: translate3d(37.2739px, -142.764px, 27px);">/</div><div class="symbol" style="transform: translate3d(6.95174px, -147.199px, 28px);">}</div><div class="symbol" style="transform: translate3d(-23.6316px, -145.26px, 29px);">)</div><div class="symbol" style="transform: translate3d(-53.1483px, -137.023px, 30px);">(</div><div class="symbol" style="transform: translate3d(-80.3118px, -122.837px, 31px);">/</div><div class="symbol" style="transform: translate3d(-103.933px, -103.315px, 32px);">^</div><div class="symbol" style="transform: translate3d(-122.972px, -79.3026px, 33px);">^</div><div class="symbol" style="transform: translate3d(-136.586px, -51.8486px, 34px);">)</div><div class="symbol" style="transform: translate3d(-144.167px, -22.1571px, 35px);">\</div><div class="symbol" style="transform: translate3d(-145.37px, 8.46322px, 36px);">_</div><div class="symbol" style="transform: translate3d(-140.131px, 38.6559px, 37px);">@</div><div class="symbol" style="transform: translate3d(-128.673px, 67.0767px, 38px);">@</div><div class="symbol" style="transform: translate3d(-111.496px, 92.4534px, 39px);">/</div><div class="symbol" style="transform: translate3d(-89.36px, 113.643px, 40px);">&gt;</div><div class="symbol" style="transform: translate3d(-63.2514px, 129.685px, 41px);">{</div><div class="symbol" style="transform: translate3d(-34.3416px, 139.845px, 42px);">\</div><div class="symbol" style="transform: translate3d(-3.936px, 143.651px, 43px);">=</div><div class="symbol" style="transform: translate3d(26.5844px, 140.916px, 44px);">{</div><div class="symbol" style="transform: translate3d(55.8246px, 131.752px, 45px);">/</div><div class="symbol" style="transform: translate3d(82.4394px, 116.566px, 46px);">&gt;</div><div class="symbol" style="transform: translate3d(105.196px, 96.046px, 47px);">{</div><div class="symbol" style="transform: translate3d(123.031px, 71.1294px, 48px);">&amp;</div><div class="symbol" style="transform: translate3d(135.103px, 42.9661px, 49px);">&lt;</div><div class="symbol" style="transform: translate3d(140.835px, 12.8653px, 50px);">^</div><div class="symbol" style="transform: translate3d(139.941px, -17.763px, 51px);">\</div><div class="symbol" style="transform: translate3d(132.447px, -47.4736px, 52px);">(</div><div class="symbol" style="transform: translate3d(118.693px, -74.8538px, 53px);">[</div><div class="symbol" style="transform: translate3d(99.3171px, -98.5907px, 54px);">&amp;</div><div class="symbol" style="transform: translate3d(75.2354px, -117.536px, 55px);">-</div><div class="symbol" style="transform: translate3d(47.5967px, -130.761px, 56px);">^</div><div class="symbol" style="transform: translate3d(17.732px, -137.61px, 57px);">&amp;</div><div class="symbol" style="transform: translate3d(-12.9074px, -137.729px, 58px);">_</div><div class="symbol" style="transform: translate3d(-42.8196px, -131.093px, 59px);">-</div><div class="symbol" style="transform: translate3d(-70.5246px, -118.01px, 60px);">@</div><div class="symbol" style="transform: translate3d(-94.6387px, -99.1086px, 61px);">]</div><div class="symbol" style="transform: translate3d(-113.944px, -75.3174px, 62px);">*</div><div class="symbol" style="transform: translate3d(-127.454px, -47.8183px, 63px);">]</div><div class="symbol" style="transform: translate3d(-134.463px, -17.993px, 64px);">%</div><div class="symbol" style="transform: translate3d(-134.592px, 12.6444px, 65px);">&gt;</div><div class="symbol" style="transform: translate3d(-127.812px, 42.5219px, 66px);">&gt;</div><div class="symbol" style="transform: translate3d(-114.448px, 70.0905px, 67px);">_</div><div class="symbol" style="transform: translate3d(-95.1734px, 93.9043px, 68px);">)</div><div class="symbol" style="transform: translate3d(-70.9792px, 112.698px, 69px);">}</div><div class="symbol" style="transform: translate3d(-43.1275px, 125.459px, 70px);">{</div><div class="symbol" style="transform: translate3d(-13.09px, 131.483px, 71px);">^</div><div class="symbol" style="transform: translate3d(17.5266px, 130.418px, 72px);">~</div><div class="symbol" style="transform: translate3d(47.0647px, 122.294px, 73px);">/</div><div class="symbol" style="transform: translate3d(73.9047px, 107.527px, 74px);">(</div><div class="symbol" style="transform: translate3d(96.5554px, 86.9025px, 75px);">*</div><div class="symbol" style="transform: translate3d(113.739px, 61.5424px, 76px);">+</div><div class="symbol" style="transform: translate3d(124.467px, 32.8493px, 77px);">+</div><div class="symbol" style="transform: translate3d(128.102px, 2.43333px, 78px);">}</div><div class="symbol" style="transform: translate3d(124.404px, -27.9747px, 79px);">-</div><div class="symbol" style="transform: translate3d(113.553px, -56.6196px, 80px);">|</div><div class="symbol" style="transform: translate3d(96.1453px, -81.8235px, 81px);">$</div><div class="symbol" style="transform: translate3d(73.1744px, -102.086px, 82px);">~</div><div class="symbol" style="transform: translate3d(45.9782px, -116.177px, 83px);">(</div><div class="symbol" style="transform: translate3d(16.1691px, -123.218px, 84px);">_</div><div class="symbol" style="transform: translate3d(-14.4559px, -122.744px, 85px);">}</div><div class="symbol" style="transform: translate3d(-44.0207px, -114.744px, 86px);">#</div><div class="symbol" style="transform: translate3d(-70.6838px, -99.6735px, 87px);">(</div><div class="symbol" style="transform: translate3d(-92.7541px, -78.439px, 88px);">+</div><div class="symbol" style="transform: translate3d(-108.803px, -52.3545px, 89px);">]</div><div class="symbol" style="transform: translate3d(-117.762px, -23.0689px, 90px);">{</div><div class="symbol" style="transform: translate3d(-119.005px, 7.53048px, 91px);">)</div><div class="symbol" style="transform: translate3d(-112.404px, 37.4344px, 92px);">&lt;</div><div class="symbol" style="transform: translate3d(-98.3488px, 64.6414px, 93px);">$</div><div class="symbol" style="transform: translate3d(-77.7425px, 87.2932px, 94px);">/</div><div class="symbol" style="transform: translate3d(-51.9549px, 103.806px, 95px);">%</div><div class="symbol" style="transform: translate3d(-22.7441px, 112.99px, 96px);">{</div><div class="symbol" style="transform: translate3d(7.85367px, 114.146px, 97px);">^</div><div class="symbol" style="transform: translate3d(37.6587px, 107.135px, 98px);">@</div><div class="symbol" style="transform: translate3d(64.5005px, 92.405px, 99px);">&gt;</div><div class="symbol" style="transform: translate3d(86.3772px, 70.9858px, 100px);">*</div><div class="symbol" style="transform: translate3d(101.612px, 44.4299px, 101px);">*</div><div class="symbol" style="transform: translate3d(108.993px, 14.7185px, 102px);">#</div><div class="symbol" style="transform: translate3d(107.884px, -15.8746px, 103px);">^</div><div class="symbol" style="transform: translate3d(98.3037px, -44.9488px, 104px);">&gt;</div><div class="symbol" style="transform: translate3d(80.946px, -70.1623px, 105px);">|</div><div class="symbol" style="transform: translate3d(57.1582px, -89.4256px, 106px);">^</div><div class="symbol" style="transform: translate3d(28.8581px, -101.085px, 107px);">~</div><div class="symbol" style="transform: translate3d(-1.60107px, -104.084px, 108px);">~</div><div class="symbol" style="transform: translate3d(-31.6113px, -98.0802px, 109px);">+</div><div class="symbol" style="transform: translate3d(-58.526px, -83.5147px, 110px);">~</div><div class="symbol" style="transform: translate3d(-79.895px, -61.61px, 111px);">%</div><div class="symbol" style="transform: translate3d(-93.6988px, -34.3007px, 112px);">&amp;</div><div class="symbol" style="transform: translate3d(-98.5609px, -4.09179px, 113px);">-</div><div class="symbol" style="transform: translate3d(-93.916px, 26.1493px, 114px);">@</div><div class="symbol" style="transform: translate3d(-80.112px, 53.4516px, 115px);">(</div><div class="symbol" style="transform: translate3d(-58.4305px, 75.0325px, 116px);">+</div><div class="symbol" style="transform: translate3d(-31.013px, 88.5957px, 117px);">]</div><div class="symbol" style="transform: translate3d(-0.690488px, 92.6041px, 118px);">}</div><div class="symbol" style="transform: translate3d(29.2772px, 86.4976px, 119px);">+</div><div class="symbol" style="transform: translate3d(55.535px, 70.8227px, 120px);">$</div><div class="symbol" style="transform: translate3d(75.0101px, 47.2493px, 121px);">^</div><div class="symbol" style="transform: translate3d(85.2956px, 18.4571px, 122px);">&amp;</div><div class="symbol" style="transform: translate3d(84.9959px, -12.112px, 123px);">=</div><div class="symbol" style="transform: translate3d(73.9833px, -40.626px, 124px);">+</div><div class="symbol" style="transform: translate3d(53.5216px, -63.3281px, 125px);">\</div><div class="symbol" style="transform: translate3d(26.2175px, -77.0496px, 126px);">|</div><div class="symbol" style="transform: translate3d(-4.21978px, -79.7069px, 127px);">=</div><div class="symbol" style="transform: translate3d(-33.412px, -70.7081px, 128px);">=</div><div class="symbol" style="transform: translate3d(-56.9059px, -51.193px, 129px);">\</div><div class="symbol" style="transform: translate3d(-70.8678px, -24.0365px, 130px);">/</div><div class="symbol" style="transform: translate3d(-72.7849px, 6.43147px, 131px);">*</div><div class="symbol" style="transform: translate3d(-62.0545px, 35.0033px, 132px);">{</div><div class="symbol" style="transform: translate3d(-40.3322px, 56.4297px, 133px);">_</div><div class="symbol" style="transform: translate3d(-11.5127px, 66.4188px, 134px);">^</div><div class="symbol" style="transform: translate3d(18.7425px, 62.6396px, 135px);">%</div><div class="symbol" style="transform: translate3d(43.956px, 45.5178px, 136px);">_</div><div class="symbol" style="transform: translate3d(58.1865px, 18.5832px, 137px);">/</div><div class="symbol" style="transform: translate3d(57.5797px, -11.8564px, 138px);">)</div><div class="symbol" style="transform: translate3d(41.7817px, -37.8588px, 139px);">=</div><div class="symbol" style="transform: translate3d(14.76px, -51.7894px, 140px);">~</div><div class="symbol" style="transform: translate3d(-15.4628px, -48.7842px, 141px);">|</div><div class="symbol" style="transform: translate3d(-38.5687px, -29.1283px, 142px);">{</div><div class="symbol" style="transform: translate3d(-45.2861px, 0.406305px, 143px);">&amp;</div><div class="symbol" style="transform: translate3d(-31.7866px, 27.452px, 144px);">&lt;</div><div class="symbol" style="transform: translate3d(-3.63764px, 38.2331px, 145px);">&gt;</div><div class="symbol" style="transform: translate3d(23.4123px, 25.2164px, 146px);">&gt;</div><div class="symbol" style="transform: translate3d(29.5862px, -3.95669px, 147px);">)</div><div class="symbol" style="transform: translate3d(7.36496px, -23.2757px, 148px);">&amp;</div><div class="symbol" style="transform: translate3d(-15.8908px, -6.81779px, 149px);">&gt;</div></div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-slate-900/80 backdrop-blur-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent">Portfolio</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-slate-200 hover:text-sky-400 transition-colors">Home</a>
+                <a href="#about" class="nav-link text-slate-200 hover:text-sky-400 transition-colors">About</a>
+                <a href="#timeline" class="nav-link text-slate-200 hover:text-sky-400 transition-colors">Timeline</a>
+                <a href="#projects" class="nav-link text-slate-200 hover:text-sky-400 transition-colors">Projects</a>
+                <a href="#skills" class="nav-link text-slate-200 hover:text-sky-400 transition-colors">Skills</a>
+                <a href="#contact" class="nav-link text-slate-200 hover:text-sky-400 transition-colors">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-slate-200 hover:text-sky-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800 p-4">
+            <a href="#home" class="block py-2 text-slate-200 hover:text-sky-400">Home</a>
+            <a href="#about" class="block py-2 text-slate-200 hover:text-sky-400">About</a>
+            <a href="#timeline" class="block py-2 text-slate-200 hover:text-sky-400">Timeline</a>
+            <a href="#projects" class="block py-2 text-slate-200 hover:text-sky-400">Projects</a>
+            <a href="#skills" class="block py-2 text-slate-200 hover:text-sky-400">Skills</a>
+            <a href="#contact" class="block py-2 text-slate-200 hover:text-sky-400">Contact</a>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="container mx-auto px-4 py-20 text-center">
+            <h1 class="hero-title text-5xl md:text-7xl font-bold mb-6">Hello, I'm <span class="block mt-2">Your Name</span></h1>
+            <p class="text-xl md:text-2xl text-slate-300 mb-10 max-w-2xl mx-auto">Creative Developer &amp; Designer crafting beautiful digital experiences</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#projects" class="btn-primary px-8 py-3 rounded-full font-medium">View My Work</a>
+                <a href="#contact" class="border border-sky-400 text-sky-400 px-8 py-3 rounded-full font-medium hover:bg-sky-400/10 transition-colors">Contact Me</a>
+            </div>
+            
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-slate-800/50 section visible">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 hero-title">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <div class="relative w-64 h-64 mx-auto">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-sky-400 to-indigo-400 animate-pulse"></div>
+                        <div class="absolute inset-1 rounded-full bg-slate-800 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32 text-slate-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 mt-10 md:mt-0">
+                    <h3 class="text-2xl font-semibold mb-4 text-sky-400">Who I Am</h3>
+                    <p class="text-slate-300 mb-6">I'm a passionate developer and designer with a keen eye for detail and a love for creating beautiful, functional digital experiences. With expertise in both front-end and back-end technologies, I bring ideas to life through clean code and intuitive design.</p>
+                    <p class="text-slate-300 mb-8">When I'm not coding, you can find me exploring new design trends, experimenting with creative projects, or enjoying the outdoors. I believe in continuous learning and pushing the boundaries of what's possible in digital design.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-2 bg-slate-700 rounded-full text-sm">Web Development</span>
+                        <span class="px-4 py-2 bg-slate-700 rounded-full text-sm">UI/UX Design</span>
+                        <span class="px-4 py-2 bg-slate-700 rounded-full text-sm">3D Animation</span>
+                        <span class="px-4 py-2 bg-slate-700 rounded-full text-sm">Creative Coding</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Timeline Section -->
+    <section id="timeline" class="py-20 section visible">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 hero-title">My Journey</h2>
+            
+            <div class="timeline">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item visible">
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-semibold mb-2 text-sky-400">Senior Web Developer</h3>
+                        <h4 class="text-indigo-300 mb-2">Tech Innovations Inc.</h4>
+                        <p class="text-sm text-slate-400 mb-3">2021 - Present</p>
+                        <p class="text-slate-300">Led the front-end development team in creating responsive web applications. Implemented modern JavaScript frameworks and improved site performance by 40%.</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item visible">
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-semibold mb-2 text-sky-400">Web Developer</h3>
+                        <h4 class="text-indigo-300 mb-2">Digital Solutions Agency</h4>
+                        <p class="text-sm text-slate-400 mb-3">2018 - 2021</p>
+                        <p class="text-slate-300">Developed and maintained client websites using HTML, CSS, and JavaScript. Collaborated with designers to implement responsive designs and interactive features.</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item visible">
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-semibold mb-2 text-sky-400">Master's Degree</h3>
+                        <h4 class="text-indigo-300 mb-2">Computer Science</h4>
+                        <p class="text-sm text-slate-400 mb-3">2016 - 2018</p>
+                        <p class="text-slate-300">Specialized in Human-Computer Interaction and Web Technologies. Completed thesis on "Improving User Experience Through Interactive Design Patterns".</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 4 -->
+                <div class="timeline-item visible">
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-semibold mb-2 text-sky-400">Junior Developer</h3>
+                        <h4 class="text-indigo-300 mb-2">StartUp Ventures</h4>
+                        <p class="text-sm text-slate-400 mb-3">2015 - 2016</p>
+                        <p class="text-slate-300">Assisted in developing web applications and gained hands-on experience with various programming languages and frameworks.</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 5 -->
+                <div class="timeline-item visible">
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-semibold mb-2 text-sky-400">Bachelor's Degree</h3>
+                        <h4 class="text-indigo-300 mb-2">Information Technology</h4>
+                        <p class="text-sm text-slate-400 mb-3">2011 - 2015</p>
+                        <p class="text-slate-300">Graduated with honors. Focused on web development and design principles. Led student projects in creating innovative web solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-slate-800/50 section visible">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 hero-title">My Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="card rounded-xl overflow-hidden">
+                    <div class="card-inner h-full" style="transform: rotateX(0deg) rotateY(0deg);">
+                        <div class="bg-slate-800 h-full p-6 rounded-xl border border-slate-700">
+                            <div class="h-48 bg-gradient-to-br from-sky-400 to-indigo-600 rounded-lg mb-6 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2 text-sky-400">E-Commerce Website</h3>
+                            <p class="text-slate-400 mb-4">A fully responsive e-commerce platform with modern UI and seamless user experience.</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-2 py-1 bg-slate-700 rounded text-xs">React</span>
+                                <span class="px-2 py-1 bg-slate-700 rounded text-xs">Node.js</span>
+                                <span class="px-2 py-1 bg-slate-700 rounded text-xs">MongoDB</span>
+                            </div>
+                            <a href="#" class="text-sky-400 hover:underline inline-flex items-center">
+                                View Project
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="card rounded-xl overflow-hidden">
+                    <div class="card-inner h-full">
+                        <div class="bg-slate-800 h-full p-6 rounded-xl border border-slate-700">
+                            <div class="h-48 bg-gradient-to-br from-emerald-400 to-sky-600 rounded-lg mb-6 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2 text-sky-400">Mobile App Design</h3>
+                            <p class="text-slate-400 mb-4">A fitness tracking app with intuitive UI and personalized workout recommendations.</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-2 py-1 bg-slate-700 rounded text-xs">Figma</span>
+                                <span class="px-2 py-1 bg-slate-700 rounded text-xs">React Native</span>
+                                <span class="px-2 py-1 bg-slate-700 rounded text-xs">Firebase</span>
+                            </div>
+                            <a href="#" class="text-sky-400 hover:underline inline-flex items-center">
+                                View Project
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="card rounded-xl overflow-hidden">
+                    <div class="card-inner h-full">
+                        <div class="bg-slate-800 h-full p-6 rounded-xl border border-slate-700">
+                            <div class="h-48 bg-gradient-to-br from-purple-400 to-pink-600 rounded-lg mb-6 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2 text-sky-400">3D Animation Project</h3>
+                            <p class="text-slate-400 mb-4">An interactive 3D visualization showcasing product features with engaging animations.</p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-2 py-1 bg-slate-700 rounded text-xs">Three.js</span>
+                                <span class="px-2 py-1 bg-slate-700 rounded text-xs">WebGL</span>
+                                <span class="px-2 py-1 bg-slate-700 rounded text-xs">GSAP</span>
+                            </div>
+                            <a href="#" class="text-sky-400 hover:underline inline-flex items-center">
+                                View Project
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 section visible">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 hero-title">My Skills</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-8 text-sky-400">Technical Skills</h3>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-slate-300">HTML/CSS</span>
+                            <span class="text-sky-400">95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="95%" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-slate-300">JavaScript</span>
+                            <span class="text-sky-400">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90%" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-slate-300">React</span>
+                            <span class="text-sky-400">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-slate-300">Three.js</span>
+                            <span class="text-sky-400">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="80%" style="width: 80%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-slate-300">Node.js</span>
+                            <span class="text-sky-400">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="75%" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold mb-8 text-sky-400">Design Skills</h3>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-slate-300">UI/UX Design</span>
+                            <span class="text-sky-400">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="90%" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-slate-300">Figma</span>
+                            <span class="text-sky-400">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="85%" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-slate-300">Adobe Creative Suite</span>
+                            <span class="text-sky-400">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="80%" style="width: 80%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-slate-300">Motion Design</span>
+                            <span class="text-sky-400">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="75%" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-slate-300">3D Modeling</span>
+                            <span class="text-sky-400">70%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-width="70%" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-slate-800/50 section visible">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 hero-title">Get In Touch</h2>
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold mb-6 text-sky-400">Contact Information</h3>
+                    <p class="text-slate-300 mb-8">Feel free to reach out to me for collaboration, questions, or just to say hello. I'm always open to discussing new projects and opportunities.</p>
+                    
+                    <div class="flex items-start mb-6">
+                        <div class="bg-slate-800 p-3 rounded-lg mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-slate-200">Email</h4>
+                            <p class="text-slate-400">your.email@example.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start mb-6">
+                        <div class="bg-slate-800 p-3 rounded-lg mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-slate-200">Location</h4>
+                            <p class="text-slate-400">San Francisco, CA</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mb-4 text-sky-400">Connect With Me</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-icon bg-slate-800 p-3 rounded-lg text-sky-400 hover:bg-slate-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon bg-slate-800 p-3 rounded-lg text-sky-400 hover:bg-slate-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon bg-slate-800 p-3 rounded-lg text-sky-400 hover:bg-slate-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon bg-slate-800 p-3 rounded-lg text-sky-400 hover:bg-slate-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <form class="bg-slate-800/50 p-8 rounded-xl border border-slate-700">
+                        <div class="mb-6">
+                            <label for="name" class="block text-slate-300 mb-2">Name</label>
+                            <input type="text" id="name" class="contact-input w-full px-4 py-3 rounded-lg text-slate-200 focus:outline-none" placeholder="Your Name">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block text-slate-300 mb-2">Email</label>
+                            <input type="email" id="email" class="contact-input w-full px-4 py-3 rounded-lg text-slate-200 focus:outline-none" placeholder="Your Email">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="subject" class="block text-slate-300 mb-2">Subject</label>
+                            <input type="text" id="subject" class="contact-input w-full px-4 py-3 rounded-lg text-slate-200 focus:outline-none" placeholder="Subject">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-slate-300 mb-2">Message</label>
+                            <textarea id="message" rows="5" class="contact-input w-full px-4 py-3 rounded-lg text-slate-200 focus:outline-none resize-none" placeholder="Your Message"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary w-full py-3 rounded-lg font-medium">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-10">
+        <div class="container mx-auto px-4 text-center">
+            <div class="text-2xl font-bold bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent mb-4">Portfolio</div>
+            <p class="text-slate-400 mb-6">© 2023 Your Name. All rights reserved.</p>
+            <div class="flex justify-center space-x-6">
+                <a href="#home" class="text-slate-400 hover:text-sky-400 transition-colors">Home</a>
+                <a href="#about" class="text-slate-400 hover:text-sky-400 transition-colors">About</a>
+                <a href="#timeline" class="text-slate-400 hover:text-sky-400 transition-colors">Timeline</a>
+                <a href="#projects" class="text-slate-400 hover:text-sky-400 transition-colors">Projects</a>
+                <a href="#contact" class="text-slate-400 hover:text-sky-400 transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorHighlight = document.querySelector('.cursor-highlight');
+        
+        document.addEventListener('mousemove', (e) => {
+            // Use requestAnimationFrame for smoother cursor movement
+            requestAnimationFrame(() => {
+                const x = e.clientX;
+                const y = e.clientY;
+                
+                // Update main cursor
+                cursor.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+                
+                // Update cursor highlight to match the main cursor position exactly
+                cursorHighlight.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+            });
+        });
+        
+        // Change cursor size on hover
+        const hoverElements = document.querySelectorAll('a, button, .card, .timeline-content');
+        
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.style.width = '50px';
+                cursor.style.height = '50px';
+                cursor.style.backgroundColor = 'rgba(56, 189, 248, 0.2)';
+                
+                cursorHighlight.style.width = '150px';
+                cursorHighlight.style.height = '150px';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.style.width = '30px';
+                cursor.style.height = '30px';
+                cursor.style.backgroundColor = 'rgba(56, 189, 248, 0.3)';
+                
+                cursorHighlight.style.width = '100px';
+                cursorHighlight.style.height = '100px';
+            });
+        });
+        
+        // Hide cursor when mouse leaves window
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+            cursorHighlight.style.opacity = '0';
+        });
+        
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
+            cursorHighlight.style.opacity = '1';
+        });
+        
+        // 3D Background Animation
+        const createBackground = () => {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            const renderer = new THREE.WebGLRenderer({ 
+                alpha: true,
+                antialias: true // Add antialiasing for smoother particles
+            });
+            
+            // Set renderer size immediately
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio); // Add this for better resolution
+            
+            // Get container and append canvas
+            const container = document.getElementById('canvas-container');
+            container.innerHTML = ''; // Clear any existing canvas
+            container.appendChild(renderer.domElement);
+            
+            // Ensure the canvas fills the viewport
+            renderer.domElement.style.position = 'absolute';
+            renderer.domElement.style.top = '0';
+            renderer.domElement.style.left = '0';
+
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 1000;
+            
+            const posArray = new Float32Array(particlesCount * 3);
+            
+            for (let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x38bdf8,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 5;
+            
+            // Mouse movement effect
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            });
+            
+            // Animation loop
+            const animate = () => {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.001;
+                particlesMesh.rotation.y += 0.001;
+                
+                // Enhanced mouse movement effect
+                particlesMesh.rotation.x += mouseY * 0.001;
+                particlesMesh.rotation.y += mouseX * 0.001;
+                
+                // Mouse position affects particles
+                const positions = particlesMesh.geometry.attributes.position.array;
+                
+                for (let i = 0; i < particlesCount; i++) {
+                    const i3 = i * 3;
+                    const x = positions[i3];
+                    const y = positions[i3 + 1];
+                    const z = positions[i3 + 2];
+                    
+                    // Calculate distance from mouse position (in 3D space)
+                    const distanceToMouse = Math.sqrt(
+                        Math.pow(x - mouseX * 5, 2) + 
+                        Math.pow(y - mouseY * 5, 2)
+                    );
+                    
+                    // Move particles slightly away from mouse
+                    if (distanceToMouse < 1) {
+                        const angle = Math.atan2(y - mouseY * 5, x - mouseX * 5);
+                        positions[i3] += Math.cos(angle) * 0.01;
+                        positions[i3 + 1] += Math.sin(angle) * 0.01;
+                    }
+                }
+                
+                particlesMesh.geometry.attributes.position.needsUpdate = true;
+                
+                renderer.render(scene, camera);
+            };
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+        
+        
+        
+        // Create 3D Earth with keyboard symbols
+        const createEarth = () => {
+            const earthElement = document.getElementById('earth');
+            const symbols = ['@', '#', '$', '%', '&', '*', '{', '}', '[', ']', '(', ')', '<', '>', '/', '\\', '|', '=', '+', '-', '_', '^', '~'];
+            const radius = 150;
+            const numSymbols = 300;
+            
+            for (let i = 0; i < numSymbols; i++) {
+                // Calculate position on a sphere
+                const phi = Math.acos(-1 + (2 * i) / numSymbols);
+                const theta = Math.sqrt(numSymbols * Math.PI) * phi;
+                
+                // Convert to Cartesian coordinates
+                const x = radius * Math.cos(theta) * Math.sin(phi);
+                const y = radius * Math.sin(theta) * Math.sin(phi);
+                const z = radius * Math.cos(phi);
+                
+                // Create symbol element
+                const symbol = document.createElement('div');
+                symbol.className = 'symbol';
+                symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                
+                // Position in 3D space
+                symbol.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
+                
+                // Add to earth
+                earthElement.appendChild(symbol);
+            }
+        };
+        
+        // Initialize 3D Earth
+        createEarth();
+
+        // Initialize 3D background
+        createBackground();
+
+        // Update the Intersection Observer code
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15 // Increase threshold for later triggering
+        };
+
+        // Update the skills observer code in your JavaScript
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add small delay for cascading effect
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                        
+                        // Special handling for skills section
+                        if (entry.target.id === 'skills') {
+                            const skillBars = entry.target.querySelectorAll('.skill-progress');
+                            const skillPercentages = entry.target.querySelectorAll('.skill-percentage');
+                            
+                            // Animate each skill bar and percentage
+                            skillBars.forEach((bar, index) => {
+                                setTimeout(() => {
+                                    const width = bar.getAttribute('data-width');
+                                    bar.style.setProperty('--progress-width', width);
+                                    bar.classList.add('visible');
+                                    
+                                    // Animate the percentage number
+                                    const percentageElement = skillPercentages[index];
+                                    if (percentageElement) {
+                                        percentageElement.classList.add('visible');
+                                        
+                                        // Animate the percentage number counting up
+                                        const targetPercentage = parseInt(width);
+                                        let currentPercentage = 0;
+                                        const duration = 1500; // 1.5 seconds
+                                        const interval = duration / targetPercentage;
+                                        
+                                        const counter = setInterval(() => {
+                                            currentPercentage++;
+                                            percentageElement.textContent = `${currentPercentage}%`;
+                                            
+                                            if (currentPercentage >= targetPercentage) {
+                                                clearInterval(counter);
+                                            }
+                                        }, interval);
+                                    }
+                                }, index * 200); // Staggered animation
+                            });
+                        }
+
+                        // ... rest of your existing observer code ...
+                    }, 100);
+                }
+            });
+        }, observerOptions);
+
+        // Apply observer to sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('visible'); // Ensure elements start hidden
+            sectionObserver.observe(section);
+        });
+
+        // Update timeline observer
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add small delay for cascading effect
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, 100);
+                }
+            });
+        }, observerOptions);
+
+        // Apply observer to timeline items
+        document.querySelectorAll('.timeline-item').forEach((item, index) => {
+            item.classList.remove('visible'); // Ensure elements start hidden
+            item.style.transitionDelay = `${index * 150}ms`; // Add staggered delay
+            timelineObserver.observe(item);
+        });
+
+        // Add this class to elements you want to animate on scroll
+        document.querySelectorAll('.card, .skill-bar, .timeline-content').forEach(element => {
+            element.classList.add('animate-on-scroll');
+        });
+        
+        // Form submission handler (demo only)
+        const contactForm = document.querySelector('form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Validate form (simple validation)
+            if (name && email && subject && message) {
+                // In a real application, you would send this data to a server
+                alert('Thank you for your message! This is a demo form, so no message was actually sent.');
+                contactForm.reset();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+        
+        // Mouse movement animations for cards
+        const cards = document.querySelectorAll('.card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleX = (y - centerY) / 20;
+                const angleY = (centerX - x) / 20;
+                
+                card.querySelector('.card-inner').style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('.card-inner').style.transform = 'rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'937c7a7355ed3c7c',t:'MTc0NTkwNTM3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border: none; visibility: hidden;"></iframe>
+</body>
+</html>
