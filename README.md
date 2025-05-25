@@ -20,7 +20,7 @@ I am passionate about creating innovative solutions. I enjoy diving into the wor
 - 🏃🏻‍➡️ I'm ex-[Sports Secretary](https://clubs.iiit.ac.in/clubs/sports_secretary/members) @ IIIT-H | ex-**Finance Head** [Felicity](https://felicity.iiit.ac.in/) | ex-**Member** [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members) | ex-**Member & Logistics Head** [Art Society](https://clubs.iiit.ac.in/clubs/artsociety/members) | ex-Mess Coordinator
 - 💬 Ask me about anything, I am happy to help!
 - 📬 How to reach me: [vinit2004mehtaa@gmail.com](mailto:vinit2004mehtaa@gmail.com)
-- 📝 [Resume](https://drive.google.com/file/d/14-FUibbvFFT6jn8oZpsvfN2Bfx_JIinG/view?usp=share_link)
+- 📝 [Resume](https://drive.google.com/file/d/1v-3Z_Jn7w9cdVzsXY1w91xnBje21_D5-/view?usp=sharing)
 
 ---
 
