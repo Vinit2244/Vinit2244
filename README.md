@@ -6,7 +6,7 @@
 <a href="https://www.instagram.com/vinitzz._/" target="_blank"><img align="center" src="instagram.svg" alt="vinitzz._" height="30" width="40" /></a>
 &nbsp;
 <a href="https://vinit2244.github.io" target="_blank">
-  <img align="center" src="website.svg" alt="portfolio" height="30" width="40" />
+  <img align="center" src="globe.svg" alt="portfolio" height="30" width="40" />
 </a>
 
 ## Glad to see you here! &nbsp;
