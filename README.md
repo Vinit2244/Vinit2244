@@ -37,9 +37,7 @@ I am passionate about creating innovative solutions. I enjoy diving into the wor
     <a href="#"><img alt="CSS" src="https://img.shields.io/badge/CSS-1572B6.svg?logo=css3&logoColor=white"></a>
     <a href="#"><img alt="HTML" src="https://img.shields.io/badge/HTML-E34F26.svg?logo=html5&logoColor=white"></a>
     <a href="#"><img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?logo=javascript&logoColor=black"></a>
-    <a href="#"><img alt="Rust" src="https://img.shields.io/badge/Rust-FFA500.svg?logo=rust&logoColor=white"></a>
     <a href="#"><img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6.svg?logo=typescript&logoColor=white"></a>
-    <a href="#"><img alt="R" src="https://img.shields.io/badge/R-276DC3.svg?logo=r&logoColor=white"></a>
     <a href="#"><img alt="Solidity" src="https://img.shields.io/badge/Solidity-363636.svg?logo=solidity&logoColor=white"></a>
 </p>
 
@@ -52,7 +50,6 @@ I am passionate about creating innovative solutions. I enjoy diving into the wor
     <a href="#"><img alt="Pandas" src="https://img.shields.io/badge/Pandas-150458.svg?logo=pandas&logoColor=white"></a>
     <a href="#"><img alt="Tkinter" src="https://img.shields.io/badge/Tkinter-FFD63B.svg?logo=python&logoColor=white"></a>
     <a href="#"><img alt="Matplotlib" src="https://img.shields.io/badge/Matplotlib-3776AB.svg?logo=matplotlib&logoColor=white"></a>
-    <a href="#"><img alt="PyGame" src="https://img.shields.io/badge/PyGame-ABABAB?logo=pygame&logoColor=white"></a>
     <a href="#"><img alt="Scikit-learn" src="https://img.shields.io/badge/Scikit--learn-%2399FF00.svg?logo=scikit-learn&logoColor=white"></a
     <a href="#"><img alt="Weights and Biases" src="https://img.shields.io/badge/Weights%20&%20Biases-FFBE00.svg?logo=weightsandbiases&logoColor=white"></a>
     <a href="#"><img alt="Web3" src="https://img.shields.io/badge/Web3-F16822.svg?logo=web3dotjs&logoColor=white"></a>
@@ -66,12 +63,9 @@ I am passionate about creating innovative solutions. I enjoy diving into the wor
 <p>
     <a href="#"><img alt="Git" src="https://img.shields.io/badge/Git-99FF00.svg?logo=git&logoColor=white"></a>
     <a href="#"><img alt="Jupyter" src="https://img.shields.io/badge/Jupyter-F37626.svg?logo=Jupyter&logoColor=white"></a>
-    <a href="#"><img alt="Postman" src="https://img.shields.io/badge/Postman-FF6C37?logo=postman&logoColor=white"></a>
     <a href="#"><img alt="Visual Paradigm" src="https://forums.visual-paradigm.com/uploads/default/original/1X/611984aefcf5ca1851796787682a14acf6b347dc.png" height="20"></a>
-    <a href="#"><img alt="QGIS" src="https://img.shields.io/badge/QGIS-589632.svg?logo=qgis&logoColor=white"></a>
     <a href="#"><img alt="Google Earth Engine" src="https://img.shields.io/badge/Google%20Earth%20Engine-3D5A97.svg?logo=google-earth&logoColor=white"></a>
     <a href="#"><img alt="Canva" src="https://img.shields.io/badge/Canva-00C4CC.svg?logo=canva&logoColor=white"></a>
-    <a href="#"><img alt="Blender" src="https://img.shields.io/badge/Blender-F5792A.svg?logo=blender&logoColor=white"></a>
     <a href="#"><img alt="oneM2M" src="https://img.shields.io/badge/oneM2M-003366.svg?logo=onem2m&logoColor=white"></a>
     <a href="#"><img alt="ngrok" src="https://img.shields.io/badge/ngrok-1A1A1A.svg?logo=ngrok&logoColor=white"></a>
     <a href="#"><img alt="Ethereum" src="https://img.shields.io/badge/Ethereum-3C3C3D.svg?logo=ethereum&logoColor=white"></a>
