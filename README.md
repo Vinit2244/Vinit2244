@@ -1,16 +1,12 @@
-<img src="banner.png" alt="Hello, I am Vinit Mehta. Welcome to my profile." width="100%"/>
-
-# Welcome to [Vinit Mehta's](https://vinitmehta.me/) profile! <img src="https://emojis.slackmojis.com/emojis/images/1588315024/8823/hyperkitty.gif?1588315024" width="30" /></a>
-
-I am passionate about creating innovative solutions. I enjoy diving into the world of technology to build meaningful projects. When not in front of the screen, you'll find me immersed in a good book, expressing myself on canvas, spiking a volleyball, or simply enjoying the rhythm of my favorite tunes. Let's connect and explore the endless possibilities of tech and creativity!
+<img src="banner3.png" alt="Hello, I am Vinit Mehta. Welcome to my profile." width="100%"/>
 
 ## About me
 
-- 👨‍🎓 I'm a **Senior Computer Science Student** @ [International Institute of Information Technology, Hyderabad](https://www.iiit.ac.in).
-- 🔬 I'm an **Undergraduate Researcher** at [Machine Learning Lab (MLL)](https://www.linkedin.com/company/mll-iiith/) @ IIIT-H under [Prof. Charu Sharma](https://charusharma.org) and [Prof. Karthick Thiyagarajan](https://www.karthickthiyagarajan.com/) on the topic of 3D Perception for Embodied Agents.
-- 🏃🏻‍➡️ I'm ex-[Sports Secretary](https://clubs.iiit.ac.in/clubs/sports_secretary/members) @ IIIT-H | ex-**Finance Head** [Felicity](https://felicity.iiit.ac.in/) | ex-**Member** [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members) | ex-**Member & Logistics Head** [Art Society](https://clubs.iiit.ac.in/clubs/artsociety/members) | ex-Mess Coordinator
-- 💬 Ask me about anything, I am happy to help!
-- 📬 How to reach me: [vinit2004mehtaa@gmail.com](mailto:vinit2004mehtaa@gmail.com)
+- **Senior Computer Science Student** @ [IIIT Hyderabad](https://www.iiit.ac.in).
+- **Undergraduate Researcher** at [Machine Learning Lab](https://www.linkedin.com/company/mll-iiith/) @ IIIT-H under [Prof. Charu Sharma](https://charusharma.org) and [Prof. Karthick Thiyagarajan](https://www.karthickthiyagarajan.com/) on the topic of 3D Perception for Embodied Agents.
+- ex-[Sports Secretary](https://clubs.iiit.ac.in/clubs/sports_secretary/members) @ IIIT-H | ex-**Finance Head** [Felicity](https://felicity.iiit.ac.in/) | ex-**Member** [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members) | ex-**Member & Logistics Head** [Art Society](https://clubs.iiit.ac.in/clubs/artsociety/members) | ex-Mess Coordinator
+
+I am passionate about creating innovative solutions. I enjoy diving into the world of technology to build meaningful projects. When not in front of the screen, you'll find me immersed in a good book, expressing myself on canvas, spiking a volleyball, or simply enjoying the rhythm of my favorite tunes. Let's connect and explore the endless possibilities of tech and creativity!
 
 ## Technical skills
 
@@ -61,18 +57,20 @@ I am passionate about creating innovative solutions. I enjoy diving into the wor
 # Connect with me
 <a href="https://www.linkedin.com/in/vinit-mehta-96138820a/" target="_blank"><img align="center" src="linked-in-alt.svg" alt="vinit-mehta" height="30" width="40" /></a>
 &nbsp;
-<a href="https://twitter.com/Vinitzz_" target="_blank"><img align="center" src="twitter.svg" alt="Vinitzz_" height="30" width="40" /></a>
+<a href="https://vinit2244.github.io" target="_blank"><img align="center" src="globe.svg" alt="portfolio" height="30" width="40" /></a>
+&nbsp;
+<a href="mailto:vinit2004mehtaa@gmail.com" target="_blank"><img align="center" src="gmail.svg" alt="email" height="30" width="40" /></a>
 &nbsp;
 <a href="https://www.instagram.com/vinitzz._/" target="_blank"><img align="center" src="instagram.svg" alt="vinitzz._" height="30" width="40" /></a>
 &nbsp;
-<a href="https://vinit2244.github.io" target="_blank"><img align="center" src="globe.svg" alt="portfolio" height="30" width="40" /></a>
+<a href="https://twitter.com/Vinitzz_" target="_blank"><img align="center" src="twitter.svg" alt="Vinitzz_" height="30" width="40" /></a>
 
 <div align="center" >
-
   <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Face%20with%20Spiral%20Eyes.png" width="10%" alt="Broken system!"/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Relieved%20Face.png" width="10%" alt="It's working!"/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Astonished%20Face.png" width="10%" alt="It's working but you don't know how!"/><br>
 
+  <i>Always happy to help XD</i>
 </div>
