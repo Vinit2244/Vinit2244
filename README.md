@@ -3,9 +3,15 @@
 ## About me
 
 - **Senior Computer Science Student** @ [IIIT Hyderabad](https://www.iiit.ac.in).
-- **Undergraduate Researcher** at [Machine Learning Lab](https://www.linkedin.com/company/mll-iiith/) @ IIIT-H under [Prof. Charu Sharma](https://charusharma.org)
-- ex-[Sports Secretary](https://clubs.iiit.ac.in/clubs/sports_secretary/members) IIIT-H | ex-**Finance Head** [Felicity](https://felicity.iiit.ac.in/) | ex-**Member** [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members) | ex-**Logistics Head** [Art Society](https://clubs.iiit.ac.in/clubs/artsociety/members) | ex-Mess Coordinator
-- **Research Interests**: 3D Computer Vision, Multimodal AI, Robotics
+- **Undergraduate Researcher** at [Machine Learning Lab](https://www.linkedin.com/company/mll-iiith/) @ IIIT-H
+- **Interests**: 3D Computer Vision • Robotics • Distributed Systems • Applied Machine Learning
+- PORs:
+  - ex-[Sports Secretary](https://clubs.iiit.ac.in/clubs/sports_secretary/members) IIIT-H
+  - ex-**Finance Head** [Felicity](https://felicity.iiit.ac.in/)
+  - ex-**Logistics Head** [Art Society](https://clubs.iiit.ac.in/clubs/artsociety/members)
+  - ex-**Coordinator** Mess
+  - ex-**Member** [Electronics and Robotics Club](https://clubs.iiit.ac.in/clubs/roboticsclub/members)
+
 
 I am passionate about creating innovative solutions. I enjoy diving into the world of technology to build meaningful projects. When not in front of the screen, you'll find me immersed in a good book, expressing myself on canvas, spiking a volleyball, or simply enjoying the rhythm of my favorite tunes. Let's connect and explore the endless possibilities of tech and creativity!
 
@@ -23,7 +29,8 @@ I am passionate about creating innovative solutions. I enjoy diving into the wor
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Solidity](https://img.shields.io/badge/Solidity-363636.svg?style=for-the-badge&logo=solidity&logoColor=white)
 
-### Machine Learning & Data Science
+### Frameworks & Libraries
+![Elasticsearch](https://img.shields.io/badge/Elasticsearch-005571?style=for-the-badge&logo=elasticsearch&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C.svg?style=for-the-badge&logo=pytorch&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
@@ -31,27 +38,25 @@ I am passionate about creating innovative solutions. I enjoy diving into the wor
 ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E.svg?style=for-the-badge&logo=scikitlearn&logoColor=white)
 ![Weights & Biases](https://img.shields.io/badge/Weights%20&%20Biases-FFBE00.svg?style=for-the-badge&logo=weightsandbiases&logoColor=white)
 ![Jupyter](https://img.shields.io/badge/Jupyter-F37626.svg?style=for-the-badge&logo=jupyter&logoColor=white)
-
-### Web3 & Blockchain
 ![Web3](https://img.shields.io/badge/Web3-F16822.svg?style=for-the-badge&logo=web3dotjs&logoColor=white)
-![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D.svg?style=for-the-badge&logo=ethereum&logoColor=white)
-![Solidity](https://img.shields.io/badge/Solidity-363636.svg?style=for-the-badge&logo=solidity&logoColor=white)
-
-### Distributed Systems & Networking
 ![gRPC](https://img.shields.io/badge/gRPC-4285F4.svg?style=for-the-badge&logo=google&logoColor=white)
 ![MPI](https://img.shields.io/badge/MPI-00427E.svg?style=for-the-badge&logo=openmpi&logoColor=white)
 ![MAVLink](https://img.shields.io/badge/MAVLink-FF0066.svg?style=for-the-badge&logo=airplayaudio&logoColor=white)
 ![oneM2M](https://img.shields.io/badge/oneM2M-003366.svg?style=for-the-badge&logo=onem2m&logoColor=white)
 ![ngrok](https://img.shields.io/badge/ngrok-1A1A1A.svg?style=for-the-badge&logo=ngrok&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 
-### Development Tools
+### Tools & Platforms
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 ![Arduino](https://img.shields.io/badge/Arduino-00979D.svg?style=for-the-badge&logo=arduino&logoColor=white)
 ![Tkinter](https://img.shields.io/badge/Tkinter-FFD63B.svg?style=for-the-badge&logo=python&logoColor=white)
-
-### Design & Visualization Tools
+![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 ![Google Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-3D5A97.svg?style=for-the-badge&logo=googleearth&logoColor=white)
 ![Canva](https://img.shields.io/badge/Canva-00C4CC.svg?style=for-the-badge&logo=canva&logoColor=white)
+![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D.svg?style=for-the-badge&logo=ethereum&logoColor=white)
 <img src="https://forums.visual-paradigm.com/uploads/default/original/1X/611984aefcf5ca1851796787682a14acf6b347dc.png" alt="Visual Paradigm" height="30"/>
 
 
